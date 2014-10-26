@@ -3,6 +3,22 @@ BASE=`dirname $0`
 . $BASE/env.sh
 NUM_COMMANDS=0
 
+usage() {
+  echo "Each line below is the combination of arguments 
+  required to perform a task.  You can combine multiple task together
+
+  "
+
+  echo "install.sh plus a command with options:
+  
+  "
+
+  echo "--install-luajit --luajit-prefix /some/prefix --tmp-dir /tmp"
+  echo "--install-luarocks --luajit-prefix /prefix/used/for/install-luajit --tmp-dir /tmp"
+  echo "--install-nginx --nginx-prefix /some/prefix --luajit-prefix /prefix/used/for/install-luajit --tmp-dir /tmp"
+
+}
+
 process_arg() {
 
   arg=`echo "$*" | awk '{print $1}'`
@@ -51,6 +67,7 @@ process_arg() {
       d=`dirname $NGINX_PREFIX`
       if [ ! -d $d ] ; then
         echo "Could not find the base for NGINX_PREFIX: $d"
+        usage
         exit 1
       fi
       ;;
@@ -114,6 +131,7 @@ process_args() {
 
   if [ $NUM_COMMANDS -eq 0 ] ; then
     echo "Could not find a command to execute"
+    usage
     exit 1
   fi
   #echo ${COMMANDS[@]}
@@ -160,6 +178,10 @@ install_lua() {
 
   enforce_tmp_dir
 
+  if [ ! -f $TMP_DIR/$LUAJIT_ARCHIVE ] ; then
+    curl $LUAJIT_DOWNLOAD > /tmp/$LUAJIT_ARCHIVE
+  fi
+
   d=$TMP_DIR/$LUAJIT
 
   tar -C $TMP_DIR -xzf $TMP_DIR/$LUAJIT_ARCHIVE
@@ -178,6 +200,11 @@ install_luarocks() {
     echo "Missing --luajit-prefix"
     exit 1
   fi
+
+  if [ ! -f $TMP_DIR/$LUAROCKS_ARCHIVE ] ; then
+    curl $LUAROCKS_DOWNLOAD > /tmp/$LUAROCKS_ARCHIVE
+  fi
+
 
   export PATH=$LUAJIT_PREFIX/bin:$PATH
 
@@ -206,6 +233,28 @@ install_nginx() {
 
   enforce_tmp_dir
   enforce_nginx_prefix
+
+  if [ ! -f $TMP_DIR/$NGINX_ARCHIVE ] ; then
+    curl $NGINX_DOWNLOAD > /tmp/$NGINX_ARCHIVE
+  fi
+
+
+  if [ ! -f $TMP_DIR/$PCRE_ARCHIVE ] ; then
+    curl $PCRE_DOWNLOAD > /tmp/$PCRE_ARCHIVE
+  fi
+
+  if [ ! -f $TMP_DIR/$NGINX_DEVEL_KIT_ARCHIVE ] ; then
+    curl $NGINX_DEVEL_KIT_DOWNLOAD > /tmp/$NGINX_DEVEL_KIT_ARCHIVE
+  fi
+
+  if [ ! -f $TMP_DIR/$NGINX_DEVEL_KIT_ARCHIVE ] ; then
+    curl $NGINX_DEVEL_KIT_DOWNLOAD > /tmp/$NGINX_DEVEL_KIT_ARCHIVE
+  fi
+
+  if [ ! -f $TMP_DIR/$LUA_NGINX_ARCHIVE ] ; then
+    curl $LUA_NGINX_DOWNLOAD > /tmp/$LUA_NGINX_ARCHIVE
+  fi
+
 
   cd $TMP_DIR
 
