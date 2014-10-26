@@ -90,6 +90,7 @@ Should be:
 By setting the Accept header, Rails can process the respond_to just the same as if you used the format option in the path.
 
 When 
+
      path_filter:perform()
 
 is called, it compares the path in the request against all items in the path_info.json strucgure.  If a match isn't found it halts Nginx processing of the request:
