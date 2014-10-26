@@ -89,7 +89,7 @@ Then create a sessions controller to handle login/logout.  In the sessions contr
     render some error code for client
     
 
-Now that the session_id and the time the user logged in in Redis, the session.lua code can verify that the current request's session_id is found in the Redis cache.  You can perform action such as restricting the session duration based on a time constraint by comparing the current time with that of the cached signed_at.  You should also have hooks in devise that clear the Redis cache when a session is invalidated.
+Now that the session_id is a Redis key where you can access additional information about the session you can perform additional restrictions from Lua based in items such as the duration the session has been around.  You should also have hooks in devise that clear the Redis cache when a session is invalidated.
 
 #### Sample Nginx Config
 
@@ -207,7 +207,7 @@ For example:
 
 ## Setup
 
-For personal use, I compile just what I need into Nginx, instead of using something like [OpenResty](https://github.com/openresty).  However, the OpenResty team is doing good work in bringing a full blown application server directly into Nginx via Lua scripting.
+For personal use, I compile just what I need into Nginx, instead of using something like [OpenResty](http://openresty.org/).  However, the OpenResty team is doing good work in bringing a full blown application server directly into Nginx via Lua scripting.
 
 If you want to compile Nginx with Lua support, without the OpenResty framework, feel free to use setup/install.sh:
 
