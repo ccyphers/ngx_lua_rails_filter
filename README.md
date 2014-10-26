@@ -41,10 +41,10 @@ When a request is processed if the request does not match a valid rails route a 
 
 #### Assumtpions
 
-* Dynamic routes should be constrained to constraint /\d{,}/.  In order to turn the Rails Route to a pattern that Lua can handle.
+* Dynamic routes should be constrained to /\d{,}/,  in order to translate the Rails Route into a Lua pattern.
 * You need to skip using the format option in a path, this means instead of making API calls using:
-    
-       GET /some/api/v1/call.json
+
+      GET /some/api/v1/call.json
        
      set the accept header:
     
