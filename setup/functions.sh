@@ -292,5 +292,6 @@ set_config() {
   cp -R $NGINX_CONFIG_DIR/conf $NGINX_PREFIX
   sed -e "s@--NGINX_PREFIX--@$NGINX_PREFIX@g" $NGINX_PREFIX/conf/nginx.conf > $NGINX_PREFIX/conf/nginx.conf.tmp
   mv $NGINX_PREFIX/conf/nginx.conf.tmp $NGINX_PREFIX/conf/nginx.conf
+
 }
 

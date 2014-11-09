@@ -82,7 +82,8 @@ function session:decrypt()
   self.cbc_decrypt:open(key, iv)
   local decrypt = self.cbc_decrypt:write(left_data)
   self.cbc_decrypt:close()
-
+local pl = require 'pl.pretty'
+pl.dump(decrypt)
   local session_table = self:clean(decrypt)
 
   return self.cjson.decode(session_table)

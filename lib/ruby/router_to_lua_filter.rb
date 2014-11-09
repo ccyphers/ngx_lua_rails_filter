@@ -73,11 +73,13 @@ module Router
       path = lua_pattern(path)
 
       #i.app.constraints
-
       auth = auth_check(i)
-
+      i.defaults[:controller] ||= ''
+      i.defaults[:action] ||= ''
       get_methods(i).each { |m|
         @items << {:method => m, :path => path, 
+                   :controller => i.defaults[:controller],
+                   :action => i.defaults[:action],
                    :auth_required => auth}
       }
     end
