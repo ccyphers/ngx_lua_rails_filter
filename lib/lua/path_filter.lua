@@ -9,7 +9,7 @@ function path_filter:new(params)
   params.redis_config.host = params.redis_config.host or '127.0.0.1'
   params.redis_config.port = params.redis_config.port or 6379
   params.redis = require "redis"
-  params.redis_client = params.redis.connect(params.redis_config.host, params.redis_config.)
+  params.redis_client = params.redis.connect(params.redis_config.host, params.redis_config.port)
   setmetatable(params, self)
   self.__index = self
   return params
