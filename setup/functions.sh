@@ -270,8 +270,8 @@ install_nginx() {
     --with-cc-opt="-Wno-deprecated-declarations" \
     --add-module=$TMP_DIR/$NGINX_DEVEL_KIT \
     --add-module=$TMP_DIR/$LUA_NGINX \
-    --with-http_auth_request_module \
-    --with-debug
+    --with-http_auth_request_module #\
+    #--with-debug
 
   if [ "$NGINX_CLEAN_PREFIX" = "true" ] ; then
     rm -rf $NGINX_PREFIX

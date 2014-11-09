@@ -9,6 +9,7 @@ function path_filter:new(params)
   params.redis_config.host = params.redis_config.host or '127.0.0.1'
   params.redis_config.port = params.redis_config.port or 6379
   params.redis = require "redis"
+  params.redis_client = params.redis.connect(params.redis_config.host, params.redis_config.)
   setmetatable(params, self)
   self.__index = self
   return params
@@ -83,8 +84,7 @@ function path_filter:handle_auth(item)
 --require('mobdebug').done()
     local pl = require("pl.pretty")
 
-    local client = self.redis.connect(self.redis_config.host, self.redis_config.port)
-    v = client:get(s.session_id)
+    v = self.redis_client:get(s.session_id)
     if not v then
       ngx.body = ""
       ngx.status = 401

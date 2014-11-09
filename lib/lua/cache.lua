@@ -3,6 +3,7 @@ local cache = {}
 function cache:new(params)
   params = params or {}
   params.redis = require "redis"
+  params.redis_client = params.redis.connect('127.0.0.1', 6379)
   params.cjson = require("cjson")
   setmetatable(params, self)
   self.__index = self
@@ -46,17 +47,10 @@ function cache:get(resource_info)
   end
 
 
-  -- pl.dump(params)
-  -- print(str)
-  -- print("-----SUM: " .. md5.sumhexa(str))
   local sum = md5.sumhexa(str)
 
-  -- pl.dump(keys)
-  local client = self.redis.connect('127.0.0.1', 6379)
-
   local k = resource_info.controller .. "_" .. resource_info.action .. "_" .. sum
-
-  v = client:get(k)
+  v = self.redis_client:get(k)
 
 --require('mobdebug').start('127.0.0.1')
 --    local tmp = "tmp"
