@@ -4,7 +4,6 @@ function cache:new(params)
   params = params or {}
   params.redis = require "redis"
   params.cjson = require("cjson")
-  params.table_closures = require("table_closures")
   setmetatable(params, self)
   self.__index = self
   return params
@@ -63,12 +62,12 @@ function cache:get(resource_info)
 --    local tmp = "tmp"
 --require('mobdebug').done()
   if v then
-   local blah = self.cjson.decode(v)
+   local res = self.cjson.decode(v)
 
-   pl.dump(blah)
-   ngx.header.content_type = blah.content_type
-   ngx.body = blah.body
-   ngx.say(blah.body)
+   pl.dump(res)
+   ngx.header.content_type = res.content_type
+   ngx.body = res.body
+   ngx.say(res.body)
    ngx.exit(200)
   end
 end
