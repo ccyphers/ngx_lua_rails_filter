@@ -9,6 +9,7 @@ function path_filter:new(params)
   params.redis_config.host = params.redis_config.host or '127.0.0.1'
   params.redis_config.port = params.redis_config.port or 6379
   params.redis = require "redis"
+  params.md5 = require "md5"
   params.redis_client = params.redis.connect(params.redis_config.host, params.redis_config.port)
   setmetatable(params, self)
   self.__index = self
@@ -79,12 +80,32 @@ end
 function path_filter:handle_auth(item)
   if item.auth_required then
 
---require('mobdebug').start('127.0.0.1')
     local s = self.session:decrypt()
---require('mobdebug').done()
-    local pl = require("pl.pretty")
 
-    v = self.redis_client:get(s.session_id)
+
+
+local pl = require("pl.pretty")
+
+    local id = ""
+    local crypt = ""
+
+  for x in self.table_closures.get(s['warden.user.user.key']) do
+    if type(x) == 'table' then
+      for y in self.table_closures.get(x) do
+        id = y
+      end
+    elseif type(x) == 'string' then
+      crypt = x
+    end
+  end
+
+  local sum = self.md5.sumhexa(id .. crypt)
+
+ --require('mobdebug').start('127.0.0.1')
+ --require('mobdebug').done()
+
+
+    v = self.redis_client:get(sum)
     if not v then
       ngx.body = ""
       ngx.status = 401
