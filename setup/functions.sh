@@ -1,4 +1,3 @@
-#!/bin/sh
 BASE=`dirname $0`
 . $BASE/env.sh
 NUM_COMMANDS=0
