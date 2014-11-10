@@ -43,8 +43,6 @@ end
 
 
 function path_filter:match(method, path)
-  -- local method = method
-  -- local path = path
   local ct1 = string.num_matches(path, "/")
   local ct2=-1
 
@@ -79,34 +77,21 @@ end
 
 function path_filter:handle_auth(item)
   if item.auth_required then
-
     local s = self.session:decrypt()
-
-
-
-local pl = require("pl.pretty")
-
     local id = ""
     local crypt = ""
 
-  for x in self.table_closures.get(s['warden.user.user.key']) do
-    if type(x) == 'table' then
-      for y in self.table_closures.get(x) do
-        id = y
+    for x in self.table_closures.get(s['warden.user.user.key']) do
+      if type(x) == 'table' then
+        for y in self.table_closures.get(x) do
+          id = y
+        end
+      elseif type(x) == 'string' then
+        crypt = x
       end
-    elseif type(x) == 'string' then
-      crypt = x
     end
-  end
 
-  local sum = self.md5.sumhexa(id .. crypt)
-
- --require('mobdebug').start('127.0.0.1')
- --require('mobdebug').done()
-
-
-    v = self.redis_client:get(sum)
-    if not v then
+    if not self.redis_client:get(self.md5.sumhexa(id .. crypt)) then
       ngx.body = ""
       ngx.status = 401
       ngx.exit(401)
@@ -126,11 +111,6 @@ function path_filter:perform()
     ngx.status = 404
     ngx.exit(ngx.HTTP_NOT_FOUND)
   end
-
-  --local pl = require("pl.pretty")
-  --print("**************")
-  --pl.dump(match)
-  --print("**************")
 
   return match
 
