@@ -13,7 +13,7 @@ end
 function cache:get(resource_info)
   local keys = {}
 
-  local pl = require 'pl.pretty'
+  -- local pl = require 'pl.pretty'
   local params = ngx.req.get_uri_args()
   local post_args = ngx.req.get_post_args()
 
@@ -31,8 +31,8 @@ function cache:get(resource_info)
 
   local ct = 0
   for k,v in pairs(params) do
-    print("---K: " .. k)
-    print("---V: " .. v)
+    -- print("---K: " .. k)
+    -- print("---V: " .. v)
     keys[ct] = k
     ct = ct + 1
   end
@@ -58,7 +58,7 @@ function cache:get(resource_info)
   if v then
    local res = self.cjson.decode(v)
 
-   pl.dump(res)
+   -- pl.dump(res)
    ngx.header.content_type = res.content_type
    ngx.body = res.body
    ngx.say(res.body)
