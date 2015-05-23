@@ -4,8 +4,8 @@ LUAJIT_ARCHIVE=LuaJIT-2.0.3.tar.gz
 LUAJIT_DOWNLOAD=http://luajit.org/download/$LUAJIT_ARCHIVE
 LUAJIT=`echo $LUAJIT_ARCHIVE | awk -F".tar" '{print $1}'`
 
-LUAROCKS_ARCHIVE=luarocks-2.2.0.tar.gz
-LUAROCKS_DOWNLOAD=http://luarocks.org/releases/$LUAROCKS_ARCHIVE
+LUAROCKS_ARCHIVE=luarocks-2.2.2.tar.gz
+LUAROCKS_DOWNLOAD=https://keplerproject.github.io/luarocks/releases/$LUAROCKS_ARCHIVE
 LUAROCKS=`echo $LUAROCKS_ARCHIVE | awk -F".tar" '{print $1}'`
 
 
@@ -21,8 +21,8 @@ LUA_NGINX_ARCHIVE=lua-nginx-module-0.9.12.tar.gz
 LUA_NGINX_DOWNLOAD=https://codeload.github.com/openresty/lua-nginx-module/tar.gz/v0.9.12
 LUA_NGINX=`echo $LUA_NGINX_ARCHIVE | awk -F".tar" '{print $1}'`
 
-PCRE_ARCHIVE=pcre-8.35.tar.bz2
-PCRE_DOWNLOAD=http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PCRE_ARCHIVE
+PCRE_ARCHIVE=pcre-8.36.tar.bz2
+PCRE_DOWNLOAD=http://superb-dca2.dl.sourceforge.net/project/pcre/pcre/8.36/$PCRE_ARCHIVE
 PCRE=`echo $PCRE_ARCHIVE | awk -F".tar" '{print $1}'`
 
 

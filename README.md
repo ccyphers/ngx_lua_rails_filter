@@ -65,7 +65,7 @@ For example, say you have routes defined as:
     
 The route /home would require a user to be authenticated since the controller that processing the action ends in _auth.
 
-Multiple phases are used in determining information about a user's session.  The first level of defense, is a raw session decrytpion directly in Lua, and if there isn't a valid session, directly returning a 401.  The Lua code under lib/lua/session.lua, performs the same logic as rails in verifying the integrety of the session data then decrypting the session.  The second phase of verification is a shared Redis cache for session data.  Your rails application should set a cache key at the time a user logs in.  If you are using devise, overwirte the sign_in method in the ApplicationController:
+Multiple phases are used in determining information about a user's session.  The first level of defense, is a raw session decryption directly in Lua, and if there isn't a valid session, directly returning a 401.  The Lua code under lib/lua/session.lua, performs the same logic as rails in verifying the integrety of the session data then decrypting the session.  The second phase of verification is a shared Redis cache for session data.  Your rails application should set a cache key at the time a user logs in.  If you are using devise, overwirte the sign_in method in the ApplicationController:
 
 
     def sign_in(*args)
